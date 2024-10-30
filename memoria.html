@@ -33,7 +33,7 @@ color: rgb(255, 255, 255);
 font-size: 24px;
 cursor: pointer;
 border-radius: 8px;
-user-select: none; /*Impede a seleção de texto ao clicar nas cartas*/
+user-select: none; 
 }
 .flipped, matched {
 background-color: #af4c4c;
@@ -60,17 +60,17 @@ const grid = document.getElementById("grid");
 const restartButton = document.getElementById("restartButton");
 let firstCard = null;
 let secondCard = null;
-let lockBoard = false; // Para evitar que o jogador clique durante a animação
+let lockBoard = false; 
 
-// Embaralha o array
+
 function shuffle(array) {
 return array.sort(() => Math.random () - 0.5);
 }
 
-// Cria o tabuleiro de jogo
+
 function createBoard() {
-grid.innerHTML = ""; // Limpa o grid
-const shuffledCards = shuffle([...cardValues]); // Embaralha os valores das cartas
+grid.innerHTML = ""; 
+const shuffledCards = shuffle([...cardValues]); 
 shuffledCards.forEach(value => {
 const card = document.createElement("div");
 card.classList.add("card"); 
@@ -78,61 +78,61 @@ card.dataset.value = value;
 card.addEventListener("click", flipCard);
 grid.appendChild(card);
 });
-resetGame(); // Reseta as variáveis do jogo
+resetGame(); 
 }
 
-// Função para virar a carta
+
 function flipCard() {
 if (lockBoard || this.classList.contains("flipped") || this.classList.contains("matched")) return;
 
-this.textContent = this.dataset.value; // Mostra o valor da carta
+this.textContent = this.dataset.value; 
 this.classList.add("flipped");
 
 if (!firstCard) {
-firstCard = this; // Armazena a primeira carta
+firstCard = this; 
 } else {
-secondCard = this; // Armazena a segunda carta
-checkMatch(); // Verifica se as cartas combinam
+secondCard = this; 
+checkMatch(); 
 }
 }
-// Função para verificar se as cartas combinam
+
 function checkMatch() {
-lockBoard = true; // Bloqueia o tabuleiro
+lockBoard = true; 
 if (firstCard.dataset.value === secondCard.dataset.value) {
 firstCard.classList.add("matched");
 secondCard.classList.add("matched");
 resetCards();
 } else {
-// Adiciona o tempo para desvirar as cartas se não forem iguais
+
 
 setTimeout(() => {
-firstCard.textContent = ""; // Esconde o valor da primeira carta
-secondCard.textContent = ""; // Esconde o valor da segunda carta
-firstCard.classList.remove("flipped"); // Remove a classe de virada da primeira carta 
-secondCard.classList.remove("flipped"); // Remove a classe de virada da segunda carta
-resetCards(); // Reseta as cartas
+firstCard.textContent = ""; 
+secondCard.textContent = ""; 
+firstCard.classList.remove("flipped"); 
+secondCard.classList.remove("flipped"); 
+resetCards(); 
 }, 1000);
 }
 }
 
-// Reseta as cartas e o estado do jogo
+
 function resetCards() {
-firstCard = null; // Reseta a primeira carta
-secondCard = null; // Reseta a segunda carta
-lockBoard = false; // Libera o tabuleiro
+firstCard = null; 
+secondCard = null; 
+lockBoard = false; 
 }
 
-// Reseta o jogo
+
 function resetGame() {
-firstCard = null; // Reseta a primeira carta
-secondCard = null; // Reseta a segunda carta
-lockBoard = false; // Libera o tabuleiro
+firstCard = null; 
+secondCard = null; 
+lockBoard = false; 
 }
 
-// Reinicia o jogo
+
 restartButton.addEventListener("click", createBoard);
 
-// Inicializa o jogo
+
 createBoard();
 </script>
 </body>
