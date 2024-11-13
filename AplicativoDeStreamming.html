@@ -37,7 +37,7 @@ border: 1px solid #ccc;
 
 button {
 padding: 10px 15px;
-background-color: #4945fc;
+background-color: #a207fc;
 color: white;
 border: none;
 border-radius: 5px;
@@ -192,3 +192,73 @@ style="background-color: #dc3545;">Excluir</button>
 </div>
 </div>
 `;
+
+}
+
+function recomendarfilmes (genero) {
+const recomendacoes = document.getElementById("recomendacoes");
+recomendacoes.innerHTML = '<h3>Filmes Recomendados:</h3>';
+const filmesRecomendados = catalogo.filter(filme => filme.genero.toLowerCase() === genero.toLowerCase() && filme.nome !== document.getElementById('nome').value);
+
+if (filmesRecomendados.length > 0) {
+filmes.Recomendados.forEach(filme => {
+recomendacoes.innerHTML += formatarDetalhesFilme (filme);
+}); 
+} else {
+recomendacoes.innerHTML += '<p>Nenhum filme recomendado encontrado.</p>';
+}
+}
+
+function limparCampos() {
+document.getElementById('nome').value = '';
+document.getElementById('classificacao').value = '';
+document.getElementById('duracao').value = '';
+document.getElementById('genero').value = '';
+document.getElementById('ano').value = '';
+document.getElementById('sinopse').value = '';
+document.getElementById('btn-atualizar').style.display = 'none';
+filmeEditando = null;
+}
+
+
+
+function editarFilme (index) {
+const filme = catalogo [index];
+document.getElementById('nome').value = filme.nome;
+document.getElementById('classificacao').value = filme.classificacao;
+document.getElementById('duracao').value = filme.duracao;
+document.getElementById('genero').value = filme.genero;
+document.getElementById('ano').value = filme.ano;
+document.getElementById('sinopse').value = filme.sinopse;
+
+filmeEditando = index;
+document.getElementById('btn-atualizar').style.display = 'inline';
+}
+
+function atualizarFilme() {
+if (filmeEditando !== null) {
+catalogo [filmeEditando] = {
+nome: document.getElementById('nome').value,
+classificacao: document.getElementById('classificacao').value, 
+duracao: document.getElementById('duracao').value, 
+genero: document.getElementById('genero').value,
+ano: document.getElementById('ano').value,
+sinopse: document.getElementById('sinopse').value
+};
+
+alert("Filme atualizado com sucesso!");
+limparCampos();
+listarFilmes();
+
+}
+}
+
+function excluirFilme (index) { 
+    catalogo.splice(index, 1); 
+    alert("Filme excluído com sucesso!"); 
+    listarFilmes();
+}
+
+</script>
+</body>
+</html>
